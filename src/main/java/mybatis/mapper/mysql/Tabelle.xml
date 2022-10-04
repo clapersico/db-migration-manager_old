@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prsprj.db.migration.mybatis.mapper.TabelleMapper">
+
+	<resultMap id="TabellaMap" type="Tabella">
+  		<id property="nomeTabella" column="TABLE_NAME" />
+	</resultMap>
+
+	<select id="listaTabelle" resultMap="TabellaMap">
+		Select
+			TABLE_NAME
+		From
+			INFORMATION_SCHEMA.TABLES
+		Where
+			TABLE_SCHEMA = #{nomeDatabase};
+	</select>
+	
+	<sql id="copiaTabella">
+		Create table
+			#{nomeDatabaseTrg}.#{nomeTabella}
+		Like
+			#{nomeDatabaseSrc}.#{nomeTabella}
+	</sql>
+</mapper>
