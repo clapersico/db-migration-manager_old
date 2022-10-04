@@ -28,23 +28,28 @@ public class MigrationPlan {
 		}
 	}
 	
-	public void print() {
-		if(tabelleDaCreare.size() > 0) {
-			log.info("+**************************************+");
-			log.info("| Tabelle da Creare                    |");
-			log.info("+**************************************+");
-			
-			for(Tabella t : this.tabelleDaCreare) {
-				log.info(t.getNomeTabella());
-			}
-			
-			log.info("\n\n");
-		}
+	public void printStmt() {
+		 for(String instruction : this.istruzioni)
+			 System.out.println(instruction);
 	}
 	
 	private void buildCreaTabella(Tabella t) {
 		Table tabella = Table.create(t.getNomeTabella());
-		tabella.varCharColumn("pippo").size(50).build();
+		
+		for(Column column : t.getColumns()) {
+			switch(column.getDatatype()) {
+			case "varchar":
+				tabella.varCharColumn(column.getColumnName()).size(column.getLenght()).build();
+				break;
+				
+			case "float":
+				tabella.floatColumn(column.getColumnName()).build();
+				break;
+				
+			default:
+				log.error("Datatype non gestito: " + column.getDatatype());
+			}
+		}		
 		
 		String query = Queries.createTable(tabella).build().toString();
 		this.istruzioni.add(query);

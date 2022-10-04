@@ -4,6 +4,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Tabella" type="org.prsprj.db.migration.business.Tabella"/>
+		<typeAlias alias="Column" type="org.prsprj.db.migration.business.Column"/>
 	</typeAliases>
 	
 	<environments default="standard">

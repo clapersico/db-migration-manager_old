@@ -5,21 +5,24 @@
 
 	<resultMap id="TabellaMap" type="Tabella">
   		<id property="nomeTabella" column="TABLE_NAME" />
+  		
+  		<!-- Columns -->
+  		<collection property="columns" ofType="Column">
+  			<id property="columnName" column="COLUMN_NAME" />
+  			<result property="datatype" column="DATA_TYPE" />
+  			<result property="lenght" 	column="CHARACTER_MAXIMUM_LENGTH" />
+  		</collection>
 	</resultMap>
 
 	<select id="listaTabelle" resultMap="TabellaMap">
 		Select
-			TABLE_NAME
+			TABLE_NAME,
+			COLUMN_NAME,
+			DATA_TYPE,
+			CHARACTER_MAXIMUM_LENGTH 
 		From
-			INFORMATION_SCHEMA.TABLES
+			INFORMATION_SCHEMA.COLUMNS
 		Where
 			TABLE_SCHEMA = #{nomeDatabase};
 	</select>
-	
-	<sql id="copiaTabella">
-		Create table
-			#{nomeDatabaseTrg}.#{nomeTabella}
-		Like
-			#{nomeDatabaseSrc}.#{nomeTabella}
-	</sql>
 </mapper>

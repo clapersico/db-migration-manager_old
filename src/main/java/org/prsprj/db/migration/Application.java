@@ -18,7 +18,7 @@ public class Application {
 		db2.analyze();
 		MigrationPlan plan = db1.prepareMigration(db2);
 		
-		plan.print();
 		plan.build();
+		plan.printStmt();
 	}
 }

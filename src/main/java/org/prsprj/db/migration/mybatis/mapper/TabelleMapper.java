@@ -7,9 +7,4 @@ import org.prsprj.db.migration.business.Tabella;
 
 public interface TabelleMapper {
 	public List<Tabella> listaTabelle(@Param("nomeDatabase") String nomeDatabase);
-	
-	public void creaTabella(
-			@Param("nomeDatabaseTrg") String nomeDatabaseTrg, 
-			@Param("nomeDatabaseSrc") String nomeDatabaseSrc, 
-			@Param("tabella") Tabella tabella);
 }
